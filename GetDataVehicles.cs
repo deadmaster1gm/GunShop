@@ -14,12 +14,12 @@ namespace Vehicle
             foreach (ObjectVehicle vehicle in Program.vehicles)
             {
                 Console.WriteLine
-                   ($"Марка: {vehicle.Brand} " +
-                    $"Модель: {vehicle.Model} " +
-                    $"Год выпуска: {vehicle.Year} " +
-                    $"Цвет: {vehicle.Color} " +
-                    $"Колеса: {vehicle.Wheels} " +
-                    $"Чистота: {vehicle.CarWash}");
+                   ($" Марка: {vehicle.brand}\n " +
+                    $"Модель: {vehicle.model}\n " +
+                    $"Год выпуска: {vehicle.year}\n " +
+                    $"Цвет: {vehicle.color}\n " +
+                    $"Колеса: {vehicle.wheels}\n " +
+                    $"Чистота: {vehicle.carWash}\n");
             }
         }
     }
