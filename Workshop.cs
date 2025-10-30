@@ -11,7 +11,9 @@ namespace Vehicle
         public static void VisitWorkshop ()
         {
             Console.WriteLine("Укажите порядковый номер автомобиля: ");
-            string? point = Console.ReadLine();
+            var vehicle = ListVehicles.vehicles[(Convert.ToInt32(Console.ReadLine()))-1];
+            Menu.WorkshopMenu(vehicle);
+
           
         }
     }

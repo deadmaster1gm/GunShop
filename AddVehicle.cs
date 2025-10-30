@@ -25,7 +25,7 @@ namespace Vehicle
             Console.Write("Определите и введите чистый доставят автомобиль или же он сойдет с автовоза грязным (чистый или грязный): ");
             vehicle.carWash = Console.ReadLine();
 
-            Program.vehicles.Add(vehicle);
+            ListVehicles.AddVehicle(vehicle);
             Console.WriteLine("\nАвтомобиль добавлен в автосалон!");
             Menu.MainMenu();
         }

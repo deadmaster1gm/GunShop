@@ -11,7 +11,7 @@ namespace Vehicle
     {
         public static void GetData ()
         {
-            foreach (ObjectVehicle vehicle in Program.vehicles)
+            foreach (ObjectVehicle vehicle in ListVehicles.vehicles)
             {
                 Console.WriteLine
                    ($" Марка: {vehicle.brand}\n " +
@@ -21,6 +21,8 @@ namespace Vehicle
                     $"Колеса: {vehicle.wheels}\n " +
                     $"Чистота: {vehicle.carWash}\n");
             }
+            Console.ReadLine();
+            Menu.MainMenu();
         }
     }
 }
