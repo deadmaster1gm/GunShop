@@ -46,19 +46,23 @@ namespace GunShop
                 case "1":
                     string titlePistolAdd = "Пистолет добавлен на склад!";
                     string titlePistolLine = "пистолета";
+                    IDataProvider dataProviderPistol = new SetConsoleData();
                     Pistol pistol = new Pistol();
-                    WeaponAdd(weaponList, pistol, titlePistolAdd, titlePistolLine);
+                    WeaponAdd(weaponList, dataProviderPistol, pistol, titlePistolAdd, titlePistolLine);
                     break;
-
                 case "2":
                     string titleRifleAdd = "Винтовка добавлена на склад!";
                     string titleRiflelLine = "винтовки";
+                    IDataProvider dataProviderRifle = new SetConsoleData();
                     Rifle rifle = new Rifle();
-                    WeaponAdd(weaponList, rifle, titleRifleAdd, titleRiflelLine);
+                    WeaponAdd(weaponList, dataProviderRifle, rifle, titleRifleAdd, titleRiflelLine);
                     break;
-
                 case "3":
-
+                    string titleMeleeWeaponAdd = "Нож добавлен на склад!";
+                    string titleMeleeWeaponLine = "ножа";
+                    IDataProvider dataProviderMelee = new SetConsoleDataMeleeWeapons();
+                    MeleeWeapons melee = new MeleeWeapons();
+                    WeaponAdd(weaponList, dataProviderMelee, melee, titleMeleeWeaponAdd, titleMeleeWeaponLine);
                     break;
 
                 case "4":
@@ -67,9 +71,8 @@ namespace GunShop
             }
 
         }
-        public static void WeaponAdd(List<Weapon> weaponList, Weapon gun, string titleAdd, string titleLine)
+        public static void WeaponAdd(List<Weapon> weaponList, IDataProvider dataProvider, Weapon gun, string titleAdd, string titleLine)
         {
-            IDataProvider dataProvider = new SetConsoleData();
             dataProvider.GetData(gun, titleLine);
             weaponList.Add(gun);
             Console.Clear();
@@ -84,7 +87,14 @@ namespace GunShop
             Console.Clear();
             foreach (var item in weaponList)
             {
-                Console.WriteLine($"{item.Model} с боезапасом {item.Ammo} (цена {item.Price})");
+                if(item.Ammo == null)
+                {
+                Console.WriteLine($"{item.Model} (цена {item.Price})");
+                }
+                else
+                {
+                Console.WriteLine($"{item.Model} с боезапасом {item.Ammo} магазинов (цена {item.Price}$)");
+                }
             }
             Console.ReadLine();
             Console.Clear();
