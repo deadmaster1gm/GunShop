@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace GunShop
 {
-    class Rifle : Weapon
+    class Pistol : Weapon
     {
         public string Fire()
         {
-            return "Вы отстрелялись из винтовки!";
+            return "Вы отстрелялись из пистолета!";
         }
         public string Reload()
         {
-            return "Вы перезарядили винтовку!";
+            return "Вы перезарядили пистолет!";
         }
-
     }
 }

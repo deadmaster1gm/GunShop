@@ -10,7 +10,7 @@ namespace GunShop
     {
         public void ProcessData(IDataProvider dataProvider)
         {
-            Console.WriteLine(dataProvider.GetGata());
+            throw new NotImplementedException();
         }
     }
 }

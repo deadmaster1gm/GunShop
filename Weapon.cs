@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace GunShop
 {
-    public static class WeaponList
+    class Weapon : IWeapon
     {
-
+        public string Model { get; set; }
+        public string Ammo { get; set; }
+        public string Price { get; set; }
     }
 }

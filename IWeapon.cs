@@ -11,7 +11,5 @@ namespace GunShop
         string Model { get; set; }
         string Ammo { get; set; }
         string Price { get; set; }
-        string Fire();
-        string Reload();
     }
 }

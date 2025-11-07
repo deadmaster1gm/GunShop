@@ -3,6 +3,7 @@ public class Program
 {
     public static void Main()
     {
-        Menu.MainMenu();
+        List<Weapon> weaponList = new List<Weapon>();
+        Menu.MainMenu(weaponList);
     }
 }
