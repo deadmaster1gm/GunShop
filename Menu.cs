@@ -28,7 +28,7 @@ namespace GunShop
                     break;
 
                 case "4":
-                    WeaponAdd(weaponList);
+                   WeaponAdd(weaponList);
                     break;
 
                 case "5":
@@ -44,34 +44,21 @@ namespace GunShop
             switch (point)
             {
                 case "1":
-                    string titlePistolAdd = "Пистолет добавлен на склад!";
-                    string titlePistolLine = "пистолета";
-                    IDataProvider dataProviderPistol = new SetConsoleData();
-                    Pistol pistol = new Pistol();
-                    WeaponAdd(weaponList, dataProviderPistol, pistol, titlePistolAdd, titlePistolLine);
+                    PistolAdd(weaponList);
                     break;
                 case "2":
-                    string titleRifleAdd = "Винтовка добавлена на склад!";
-                    string titleRiflelLine = "винтовки";
-                    IDataProvider dataProviderRifle = new SetConsoleData();
-                    Rifle rifle = new Rifle();
-                    WeaponAdd(weaponList, dataProviderRifle, rifle, titleRifleAdd, titleRiflelLine);
+                    RiflelAdd(weaponList);
                     break;
                 case "3":
-                    string titleMeleeWeaponAdd = "Нож добавлен на склад!";
-                    string titleMeleeWeaponLine = "ножа";
-                    IDataProvider dataProviderMelee = new SetConsoleDataMeleeWeapons();
-                    MeleeWeapons melee = new MeleeWeapons();
-                    WeaponAdd(weaponList, dataProviderMelee, melee, titleMeleeWeaponAdd, titleMeleeWeaponLine);
+                    MeleelAdd(weaponList);
                     break;
-
                 case "4":
-
+                    //Exit();
                     break;
             }
 
         }
-        public static void WeaponAdd(List<Weapon> weaponList, IDataProvider dataProvider, Weapon gun, string titleAdd, string titleLine)
+        public static void WeaponAdd(List<Weapon> weaponList, IDataProvider dataProvider, Weapon gun, ref string titleAdd, ref string titleLine)
         {
             dataProvider.GetData(gun, titleLine);
             weaponList.Add(gun);
@@ -81,24 +68,70 @@ namespace GunShop
             Console.Clear();
             Menu.MainMenu(weaponList);
         }
+        public static void PistolAdd(List<Weapon> weaponList)
+        {
+            string titlePistolAdd = "Пистолет добавлен на склад!";
+            string titlePistolLine = "пистолета";
+            IDataProvider dataProviderPistol = new SetConsoleData();
+            Pistol pistol = new Pistol();
+            WeaponAdd(weaponList, dataProviderPistol, pistol, ref titlePistolAdd, ref titlePistolLine);
+        }
 
+
+        public static void RiflelAdd(List<Weapon> weaponList)
+        {
+            string titleRifleAdd = "Винтовка добавлена на склад!";
+            string titleRiflelLine = "винтовки";
+            IDataProvider dataProviderRifle = new SetConsoleData();
+            Rifle rifle = new Rifle();
+            WeaponAdd(weaponList, dataProviderRifle, rifle, ref titleRifleAdd, ref titleRiflelLine);
+        }
+
+
+        public static void MeleelAdd(List<Weapon> weaponList)
+        {
+            string titleMeleeWeaponAdd = "Нож добавлен на склад!";
+            string titleMeleeWeaponLine = "ножа";
+            IDataProvider dataProviderMelee = new SetConsoleDataMeleeWeapons();
+            MeleeWeapons melee = new MeleeWeapons();
+            WeaponAdd(weaponList, dataProviderMelee, melee, ref titleMeleeWeaponAdd, ref titleMeleeWeaponLine);
+        }
+
+
+
+
+
+
+
+
+        // Методы GetWeaponList и ReturnGunOneByOne работают в паре,
+        // и выводят список всего что есть на складе
+        // загружая и выводя на консоль не пачкой обьектов,
+        // а по одному с помощью yield.
         public static void GetWeaponList(List<Weapon> weaponList)
         {
             Console.Clear();
-            foreach (var item in weaponList)
+            foreach (var item in ReturnGunOneByOne(weaponList))
             {
-                if(item.Ammo == null)
+                if (item.Ammo == null)
                 {
-                Console.WriteLine($"{item.Model} (цена {item.Price})");
+                    Console.WriteLine($"{item.Model} (цена {item.Price})");
                 }
                 else
                 {
-                Console.WriteLine($"{item.Model} с боезапасом {item.Ammo} магазинов (цена {item.Price}$)");
+                    Console.WriteLine($"{item.Model} с боезапасом {item.Ammo} магазинов (цена {item.Price}$)");
                 }
             }
             Console.ReadLine();
             Console.Clear();
             Menu.MainMenu(weaponList);
+        }
+        public static IEnumerable<T> ReturnGunOneByOne<T>(this List<T> weaponList) 
+        {
+            foreach (var item in weaponList)
+            {
+                yield return item;
+            }
         }
     }
 }
