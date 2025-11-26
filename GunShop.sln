@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36511.14
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GunShop", "GunShop.csproj", "{7C0FB3A1-831F-4E97-BED3-71C6AE8EAF34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LessonTest", "..\LessonTest\LessonTest.csproj", "{3D9E089D-2C30-4008-B726-A88F80669C28}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "..\Benchmark\Benchmark.csproj", "{6440D6DB-5B7E-46E2-8684-72D7DC3AFE50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{3D9E089D-2C30-4008-B726-A88F80669C28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D9E089D-2C30-4008-B726-A88F80669C28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D9E089D-2C30-4008-B726-A88F80669C28}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6440D6DB-5B7E-46E2-8684-72D7DC3AFE50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6440D6DB-5B7E-46E2-8684-72D7DC3AFE50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6440D6DB-5B7E-46E2-8684-72D7DC3AFE50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6440D6DB-5B7E-46E2-8684-72D7DC3AFE50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

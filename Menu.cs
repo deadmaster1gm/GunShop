@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace GunShop
                             return;
 
                         case "4":
-                            WeaponAdd(weaponList);
+                            WeaponAddMenu(weaponList);
                             break;
 
                         case "5":
@@ -60,7 +61,7 @@ namespace GunShop
                 }
             }
         }
-        public static void WeaponAdd(List<Weapon> weaponList)
+        public static void WeaponAddMenu(List<Weapon> weaponList)
         {
             Console.Clear();
             while (true)
@@ -115,8 +116,14 @@ namespace GunShop
         {
             dataProvider.GetData(gun, titleLine);
             weaponList.Add(gun);
+
+            string jsonWeaponList = JsonConvert.SerializeObject(weaponList);
+            string filepath = @"D:\weaponList.json";
+            File.AppendAllText(filepath, jsonWeaponList);
+
             Console.Clear();
             Console.WriteLine(titleAdd);
+            File.WriteAllText(filepath, jsonWeaponList);
             Console.ReadLine();
             Console.Clear();
             MainMenu(weaponList);
@@ -164,7 +171,7 @@ namespace GunShop
         public static void GetWeaponList(List<Weapon> weaponList)
         {
             Console.Clear();
-            if (weaponList.Count == 0)
+            if (File.Exists(@"D:\weaponList.json") != true)
             {
                 Console.WriteLine("Склад магазина пуст!");
             }
@@ -188,7 +195,9 @@ namespace GunShop
         }
         public static IEnumerable<T> ReturnGunOneByOne<T>(this List<T> weaponList) 
         {
-            foreach (var item in weaponList)
+            string filepath = @"D:\weaponList.json";
+            List<T> JsonWeaponList = JsonConvert.DeserializeObject<List<T>>(filepath);
+            foreach (var item in JsonWeaponList)
             {
                 yield return item;
             }
