@@ -10,7 +10,7 @@ namespace GunShop
 {
     static class Menu
     {
-        public static void MainMenu(List<Weapon> weaponList)
+        public static void MainMenu()
         {
             while(true)
             {
@@ -47,11 +47,11 @@ namespace GunShop
                             return;
 
                         case "4":
-                            WeaponAddMenu(weaponList);
+                            WeaponAddMenu();
                             break;
 
                         case "5":
-                            GetWeaponList(weaponList);
+                            GetWeaponList();
                             break;
                     }
                     Console.Clear();
@@ -61,7 +61,7 @@ namespace GunShop
                 }
             }
         }
-        public static void WeaponAddMenu(List<Weapon> weaponList)
+        public static void WeaponAddMenu()
         {
             Console.Clear();
             while (true)
@@ -88,20 +88,23 @@ namespace GunShop
                     switch (point)
                     {
                         case "1":
-                            PistolAdd(weaponList);
+                            string titleLinePistol = "пистолета";
+                            WeaponAdd(titleLinePistol);
                             break;
                         case "2":
-                            RiflelAdd(weaponList);
+                            string titleLineRifle = "винтовки";
+                            WeaponAdd(titleLineRifle);
                             break;
                         case "3":
-                            MeleelAdd(weaponList);
+                            string titleLineMelee = "ножа";
+                            WeaponAdd(titleLineMelee);
                             break;
                         case "4":
                             
                             break;
                         case "5":
                             Console.Clear();
-                            Menu.MainMenu(weaponList);
+                            Menu.MainMenu();
                             break;
                     }
                     Console.Clear();
@@ -112,63 +115,25 @@ namespace GunShop
             }
 
         }
-        public static void WeaponAdd(List<Weapon> weaponList, IDataProvider dataProvider, Weapon gun, ref string titleAdd, ref string titleLine)
+        public static void WeaponAdd(string titleLine)
         {
-            dataProvider.GetData(gun, titleLine);
-            weaponList.Add(gun);
-
-            string jsonWeaponList = JsonConvert.SerializeObject(weaponList);
+            IDataProvider dataProvider = new SetConsoleData();
+            string jsonWeaponList = JsonConvert.SerializeObject(dataProvider.GetData(titleLine));
             string filepath = @"D:\weaponList.json";
             File.AppendAllText(filepath, jsonWeaponList);
 
             Console.Clear();
-            Console.WriteLine(titleAdd);
-            File.WriteAllText(filepath, jsonWeaponList);
+            Console.WriteLine("Пистолет добавлен на склад!");
             Console.ReadLine();
             Console.Clear();
-            MainMenu(weaponList);
+            MainMenu();
         }
-        public static void PistolAdd(List<Weapon> weaponList)
-        {
-            string titlePistolAdd = "Пистолет добавлен на склад!";
-            string titlePistolLine = "пистолета";
-            IDataProvider dataProviderPistol = new SetConsoleData();
-            Pistol pistol = new Pistol();
-            WeaponAdd(weaponList, dataProviderPistol, pistol, ref titlePistolAdd, ref titlePistolLine);
-        }
-
-
-        public static void RiflelAdd(List<Weapon> weaponList)
-        {
-            string titleRifleAdd = "Винтовка добавлена на склад!";
-            string titleRiflelLine = "винтовки";
-            IDataProvider dataProviderRifle = new SetConsoleData();
-            Rifle rifle = new Rifle();
-            WeaponAdd(weaponList, dataProviderRifle, rifle, ref titleRifleAdd, ref titleRiflelLine);
-        }
-
-
-        public static void MeleelAdd(List<Weapon> weaponList)
-        {
-            string titleMeleeWeaponAdd = "Нож добавлен на склад!";
-            string titleMeleeWeaponLine = "ножа";
-            IDataProvider dataProviderMelee = new SetConsoleDataMeleeWeapons();
-            MeleeWeapons melee = new MeleeWeapons();
-            WeaponAdd(weaponList, dataProviderMelee, melee, ref titleMeleeWeaponAdd, ref titleMeleeWeaponLine);
-        }
-
-
-
-
-
-
-
 
         // Методы GetWeaponList и ReturnGunOneByOne работают в паре,
         // и выводят список всего что есть на складе
         // загружая и выводя на консоль не пачкой обьектов,
         // а по одному с помощью yield.
-        public static void GetWeaponList(List<Weapon> weaponList)
+        public static void GetWeaponList()
         {
             Console.Clear();
             if (File.Exists(@"D:\weaponList.json") != true)
@@ -177,7 +142,7 @@ namespace GunShop
             }
             else
             {
-                foreach (var item in ReturnGunOneByOne(weaponList))
+                foreach (var item in ReturnGunOneByOne())
                 {
                     if (item.Ammo == null)
                     {
@@ -191,13 +156,13 @@ namespace GunShop
             }
             Console.ReadLine();
             Console.Clear();
-            MainMenu(weaponList);
+            MainMenu();
         }
-        public static IEnumerable<T> ReturnGunOneByOne<T>(this List<T> weaponList) 
+        public static IEnumerable<Weapon> ReturnGunOneByOne() 
         {
             string filepath = @"D:\weaponList.json";
-            List<T> JsonWeaponList = JsonConvert.DeserializeObject<List<T>>(filepath);
-            foreach (var item in JsonWeaponList)
+            List<Weapon> jsonWeaponList = JsonConvert.DeserializeObject<List<Weapon>>(filepath);
+            foreach (var item in jsonWeaponList)
             {
                 yield return item;
             }

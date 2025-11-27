@@ -8,9 +8,15 @@ namespace GunShop
 {
     class SetConsoleData : IDataProvider
     {
-        public Weapon GetData(Weapon weapon, string titleLine)
+        public Weapon GetData(string titleLine)
         {
             Console.Clear();
+
+            string? model = null;
+            string? ammo = null;
+            string? price = null;
+            Weapon weapon = new Weapon(model, ammo, price);
+
             while (true)
             {
                 Console.WriteLine($"Введите модель {titleLine}:\n");

@@ -8,6 +8,6 @@ namespace GunShop
 {
     interface IDataProvider
     {
-        Weapon GetData(Weapon weapon, string titleLine);
+        Weapon GetData(string titleLine);
     }
 }
