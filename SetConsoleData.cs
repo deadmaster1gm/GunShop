@@ -8,71 +8,101 @@ namespace GunShop
 {
     class SetConsoleData : IDataProvider
     {
-        public Weapon GetData(string titleLine)
+        public Weapon GetData()
         {
+            string titleLineModel = string.Empty;
+            string titleLinePistol = "Введите модель пистолета:";
+            string titleLineRifle = "Введите модель винтовки:";
+            string titleLineMeleeWeapon = "Введите модель холодного оружия:";
+            string titleLineHardWeapon = "Введите модель тяжелого оружия:";
+            string titleLineAmmo = "Введите боезапас:";
+            string titleLinePrice = "Введите цену:";
+
             Console.Clear();
+            Console.WriteLine("Какой вид оружия желаете добавить?\n\n1.Пистолет\n2.Винтовка\n3.Холодное оружие\n4.Тяжелое оружие\n\n5.Назад");
+            switch(Console.ReadLine())
+            {
+                case "1":
+                    titleLineModel = titleLinePistol;
+                    break;
+
+                case "2":
+                    titleLineModel = titleLineRifle;
+                    break;
+
+                case "3":
+                    titleLineModel = titleLineMeleeWeapon;
+                    break;
+
+                case "4":
+                    titleLineModel = titleLineHardWeapon;
+                    break;
+
+                case "5":
+                    Console.Clear();
+                    Menu.MainMenu();
+                    break;
+                default:
+                    ConsoleOutput.ConsoleOutputPointError();
+                    break;
+            }
             Weapon weapon = new Weapon();
+                    while (true)
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"{titleLineModel}\n");
+                        string? input = Console.ReadLine();
 
-            while (true)
-            {
-                Console.WriteLine($"Введите модель {titleLine}:\n");
-                string? input = Console.ReadLine();
+                        if (input == "")
+                        {
+                            ConsoleOutput.ConsoleOutputPointError();
+                        }
+                        else
+                        {
+                            weapon.Model = input;
+                            Console.Clear();
+                            break;
+                        }
+                    }
+                    while (true)
+                    {
+                        int result;
+                        if (titleLineModel == titleLineMeleeWeapon)
+                        {
+                            break;
+                        }
+                        Console.WriteLine($"{titleLineAmmo}\n");
+                        string? input = Console.ReadLine();
 
-                if( input == "")
-                {
-                    Console.Clear();
-                    Console.WriteLine("Некорректный ввод!");
-                    Console.ReadLine();
-                    Console.Clear();
-                }
-                else
-                {
-                    weapon.Model = input;
-                    Console.Clear();
-                    break;
-                }
+                        if (int.TryParse(input, out result))
+                        {
+                            weapon.Ammo = input;
+                            Console.Clear();
+                            break;
+                        }
+                        else
+                        {
+                            ConsoleOutput.ConsoleOutputPointError();
+                        }
+                    }
+                    while (true)
+                    {
+                        int result;
+                        Console.WriteLine($"{titleLinePrice}\n");
+                        string? input = Console.ReadLine();
+
+                        if (int.TryParse(input, out result))
+                        {
+                            weapon.Price = input;
+                            Console.Clear();
+                            break;
+                        }
+                        else
+                        {
+                            ConsoleOutput.ConsoleOutputPointError();
+                        }
+                    }
+                    return weapon;
             }
-            while(true)
-            {
-                Console.WriteLine($"\nВведите боезапас {titleLine}:\n");
-                int result;
-                string? input = Console.ReadLine();
-
-                if(int.TryParse(input, out result))
-                {
-                    weapon.Ammo = input;
-                    Console.Clear();
-                    break;
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Некорректный ввод! Введите количество магазинов или патрон!");
-                    Console.ReadLine();
-                    Console.Clear();
-                }
-            }
-            while (true)
-            {
-                Console.WriteLine($"\nВведите цену {titleLine}:\n");
-                int result;
-                string? input = Console.ReadLine();
-
-                if (int.TryParse(input, out result))
-                {
-                    weapon.Price = input;
-                    Console.Clear();
-                    break;
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Некорректный ввод! Введите целое число!");
-                    Console.ReadLine();
-                    Console.Clear();
-                }
-            }
-            return weapon;
         }
     }
-}

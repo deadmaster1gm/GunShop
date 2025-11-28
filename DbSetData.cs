@@ -8,7 +8,7 @@ namespace GunShop
 {
     class DbSetData : IDataProvider
     {
-        public Weapon GetData(string titleLine)
+        public Weapon GetData()
         {
             throw new NotImplementedException();
         }
