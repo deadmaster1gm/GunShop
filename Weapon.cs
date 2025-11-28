@@ -17,5 +17,9 @@ namespace GunShop
             Ammo = ammo;
             Price = price;
         }
+        public Weapon()
+        {
+            
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Text.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -117,16 +118,35 @@ namespace GunShop
         }
         public static void WeaponAdd(string titleLine)
         {
-            IDataProvider dataProvider = new SetConsoleData();
-            string jsonWeaponList = JsonConvert.SerializeObject(dataProvider.GetData(titleLine));
-            string filepath = @"D:\weaponList.json";
-            File.AppendAllText(filepath, jsonWeaponList);
+            if(File.Exists(@"D:\weaponList.json"))
+            {
+                string filepath = @"D:\weaponList.json";
+                List<Weapon> weaponList = System.Text.Json.JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(filepath));
+                IDataProvider dataProvider = new SetConsoleData();
+                weaponList.Add(dataProvider.GetData(titleLine));
+                string jsonWeaponList = JsonConvert.SerializeObject(weaponList);
+                File.WriteAllText(filepath, jsonWeaponList);
+                Console.Clear();
+                Console.WriteLine("Пистолет добавлен на склад!");
+                Console.ReadLine();
+                Console.Clear();
+                MainMenu();
+            }
+            else
+            {
+                IDataProvider dataProvider = new SetConsoleData();
+                List <Weapon> weaponList = new List<Weapon>();
+                weaponList.Add(dataProvider.GetData(titleLine));
+                string jsonWeaponList = System.Text.Json.JsonSerializer.Serialize(weaponList);
+                string filepath = @"D:\weaponList.json";
+                File.AppendAllText(filepath, jsonWeaponList);
+                Console.Clear();
+                Console.WriteLine("Пистолет добавлен на склад!");
+                Console.ReadLine();
+                Console.Clear();
+                MainMenu();
+            }
 
-            Console.Clear();
-            Console.WriteLine("Пистолет добавлен на склад!");
-            Console.ReadLine();
-            Console.Clear();
-            MainMenu();
         }
 
         // Методы GetWeaponList и ReturnGunOneByOne работают в паре,
@@ -161,7 +181,7 @@ namespace GunShop
         public static IEnumerable<Weapon> ReturnGunOneByOne() 
         {
             string filepath = @"D:\weaponList.json";
-            List<Weapon> jsonWeaponList = JsonConvert.DeserializeObject<List<Weapon>>(filepath);
+            List<Weapon> jsonWeaponList = JsonConvert.DeserializeObject<List<Weapon>>(File.ReadAllText(filepath));
             foreach (var item in jsonWeaponList)
             {
                 yield return item;

@@ -11,11 +11,7 @@ namespace GunShop
         public Weapon GetData(string titleLine)
         {
             Console.Clear();
-
-            string? model = null;
-            string? ammo = null;
-            string? price = null;
-            Weapon weapon = new Weapon(model, ammo, price);
+            Weapon weapon = new Weapon();
 
             while (true)
             {
