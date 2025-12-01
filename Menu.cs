@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -20,7 +19,8 @@ namespace GunShop
                 switch (Console.ReadLine())
                     {
                         case "1":
-
+                        BuyWeapon.UserBuyWeapon();
+                        Console.Clear();
                             break;
 
                         case "2":
@@ -35,11 +35,17 @@ namespace GunShop
                             break;
 
                         case "5":
-                            
+                            Console.Clear();
+                            DeleteWeapon.Delete();
+                            Console.ReadLine();
+                            Console.Clear();
                             break;
 
                         case "6":
+                            Console.Clear();
                             GetWeaponList.GetWeapon();
+                            Console.ReadLine();
+                            Console.Clear();
                             break;
                         default:
                             ConsoleOutput.ConsoleOutputPointError();
