@@ -9,17 +9,17 @@ namespace GunShop
 {
     public static class WeaponAddList
     {
+        private const string WEAPON_LIST = @"D:\weaponList.json";
         public static void WeaponAdd()
         {
-            string filepath = @"D:\weaponList.json";
 
-            if (File.Exists(filepath))
+            if (File.Exists(WEAPON_LIST))
             {
-                List<Weapon> weaponList = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(filepath));
+                List<Weapon> weaponList = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(WEAPON_LIST));
                 IDataProvider dataProvider = new SetConsoleData();
                 weaponList.Add(dataProvider.GetData());
                 string jsonWeaponList = JsonSerializer.Serialize(weaponList);
-                File.WriteAllText(filepath, jsonWeaponList);
+                File.WriteAllText(WEAPON_LIST, jsonWeaponList);
                 ConsoleOutput.ConsoleOutputAddWeapon();
                 Menu.MainMenu();
             }
@@ -29,7 +29,7 @@ namespace GunShop
                 List<Weapon> weaponList = new List<Weapon>();
                 weaponList.Add(dataProvider.GetData());
                 string jsonWeaponList = JsonSerializer.Serialize(weaponList);
-                File.AppendAllText(filepath, jsonWeaponList);
+                File.AppendAllText(WEAPON_LIST, jsonWeaponList);
                 ConsoleOutput.ConsoleOutputAddWeapon();
                 Menu.MainMenu();
             }

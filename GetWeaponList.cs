@@ -14,18 +14,29 @@ namespace GunShop
 
     static class GetWeaponList
     {
-        public static void GetWeapon()
+        private const string WEAPON_LIST = @"D:\weaponList.json";
+        private const string WEAPON_LIST_USER = @"D:\weaponListUser.json";
+
+        public static void GetWeapon(int selectPointBuyOrSale)
         {
-            string filepath = @"D:\weaponList.json";
-            if (File.Exists(filepath) != true)
+            if (File.Exists(selectPointBuyOrSale == 0 ? WEAPON_LIST : WEAPON_LIST_USER) != true)
             {
+                while(selectPointBuyOrSale == 0)
+                {
                 Console.WriteLine("Склад магазина пуст!");
+                    break;
+                }
+                while(selectPointBuyOrSale == 1)
+                {
+                    ConsoleOutput.ConsoleOutputInventoryEmpty();
+                    break;
+                }
             }
             else
             {
                 int i = 0;
 
-                foreach (var item in ReturnGunOneByOne())
+                foreach (var item in ReturnGunOneByOne(selectPointBuyOrSale))
                 {
                     i++;
                     if (item.Ammo == null)
@@ -39,17 +50,20 @@ namespace GunShop
                 }
             }
         }
-        public static IEnumerable<Weapon> ReturnGunOneByOne()
+        public static IEnumerable<Weapon> ReturnGunOneByOne(int selectpointBuyOrSale)
         {
-            string filepath = @"D:\weaponList.json";
-            List<Weapon> jsonWeaponList = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(filepath));
+            List<Weapon> jsonWeaponList = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(selectpointBuyOrSale == 0 ? WEAPON_LIST : WEAPON_LIST_USER));
             if (jsonWeaponList.Count == 0)
             {
-                Console.Clear();
-                Console.WriteLine("Склад магазина пуст!");
-                Console.ReadLine();
-                Console.Clear();
-                Menu.MainMenu();
+                while(selectpointBuyOrSale == 0)
+                {
+                    ConsoleOutput.ConsoleOutStorageEmpty();
+                }
+                while(selectpointBuyOrSale == 1)
+                {
+                    ConsoleOutput.ConsoleOutputInventoryEmpty();
+                    break;
+                }
             }
             else
             {

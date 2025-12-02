@@ -9,6 +9,7 @@ namespace GunShop
 {
     public class DollarBalance
     {
+        private const string DOLLAR_BALANCE = @"D:\dollarBalance.json";
         public int DollarBalanceSeller { get; set; }
         public int DollarBalanceUser { get; set; }
 
@@ -16,6 +17,14 @@ namespace GunShop
         {
             
         }
-
+        public static DollarBalance SetDollarBalance ()
+        {
+            DollarBalance dollarBalanse = new DollarBalance();
+            dollarBalanse.DollarBalanceUser = 50000;
+            dollarBalanse.DollarBalanceSeller = 100000;
+            string jsonBalanceList = JsonSerializer.Serialize(dollarBalanse);
+            File.AppendAllText(DOLLAR_BALANCE, jsonBalanceList);
+            return dollarBalanse;
+        }
     }
 }

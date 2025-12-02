@@ -10,40 +10,69 @@ namespace GunShop
 {
     static class Menu
     {
+        private const string DOLLAR_BALANCE = @"D:\dollarBalance.json";
         public static void MainMenu()
         {
-            while(true)
+            int balanseUser = 0;
+            if(File.Exists(DOLLAR_BALANCE))
             {
-                Console.WriteLine("Добро пожаловать в оружейный магазин!\nЧто желаете?\n\n1.Купить оружие\n2.Продать оружие\n3.Выйти\n\n4.Принять оружие на склад (администратор)\n5.Удалить оружие со склада (администратор)\n6.Посмотреть что на складе (администратор)");
-                    
-                switch (Console.ReadLine())
+                DollarBalance dollarBalance = JsonSerializer.Deserialize<DollarBalance>(File.ReadAllText(DOLLAR_BALANCE));
+                balanseUser = dollarBalance.DollarBalanceUser;
+            }
+            else
+            {
+                DollarBalance dollarBalance = DollarBalance.SetDollarBalance();
+                balanseUser = dollarBalance.DollarBalanceUser;
+            }
+                while (true)
+                {
+                    Console.WriteLine("Добро пожаловать в оружейный магазин!\n" +
+                        "Что желаете?\n\n" +
+                        "1.Купить оружие\n" +
+                        "2.Продать оружие\n" +
+                        "3.Открыть инвентарь\n" +
+                        "4.Выйти\n\n" +
+
+                        "5.Принять оружие на склад (администратор)\n" +
+                        "6.Удалить оружие со склада (администратор)\n" +
+                        "7.Посмотреть что на складе (администратор)\n" +
+                        "___________________________________________\n" +
+                        $"БАЛАНС {balanseUser}$");
+
+                    switch (Console.ReadLine())
                     {
                         case "1":
-                        BuyWeapon.UserBuyWeapon();
-                        Console.Clear();
+                            Buy.BuyWeaponFileAndMenuLogic(0);
+                            Console.Clear();
                             break;
 
                         case "2":
-
+                            Buy.BuyWeaponFileAndMenuLogic(1);
                             break;
 
                         case "3":
-                            return;
-
-                        case "4":
-                            WeaponAddList.WeaponAdd();
-                            break;
-
-                        case "5":
                             Console.Clear();
-                            DeleteWeapon.Delete();
+                            GetWeaponList.GetWeapon(1);
                             Console.ReadLine();
                             Console.Clear();
+                            break;
+                        case "4":
+                            return;
+
+                        case "5":
+                            WeaponAddList.WeaponAdd();
                             break;
 
                         case "6":
                             Console.Clear();
-                            GetWeaponList.GetWeapon();
+                            DeleteWeapon.Delete(0);
+                            Console.ReadLine();
+                            Console.Clear();
+                            break;
+
+                        case "7":
+                            Console.Clear();
+                            GetWeaponList.GetWeapon(0);
                             Console.ReadLine();
                             Console.Clear();
                             break;

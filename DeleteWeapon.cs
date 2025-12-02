@@ -9,32 +9,39 @@ namespace GunShop
 {
     public class DeleteWeapon
     {
-        public static void Delete ()
+        private const string WEAPON_LIST = @"D:\weaponList.json";
+        private const string WEAPON_LIST_USER = @"D:\weaponListUser.json";
+        public static void Delete (int selectselectPointBuyOrSale)
         {
             while (true)
             {
                 int result;
                 Console.WriteLine("Какое именно оружие желаете удалить?\n");
-                GetWeaponList.GetWeapon();
+                GetWeaponList.GetWeapon(selectselectPointBuyOrSale);
                 string? input = Console.ReadLine();
                 if (int.TryParse(input, out result))
                 {
-                    string filepath = @"D:\weaponList.json";
-                    List<Weapon> weaponList = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(filepath));
+                    List<Weapon> weaponList = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(selectselectPointBuyOrSale == 0 ? WEAPON_LIST : WEAPON_LIST_USER));
                     try
                     {
                     weaponList.RemoveAt(result - 1);
                     }
                     catch
                     {
-                        Console.Clear();
-                        Console.WriteLine("Некорректный ввод!");
-                        Console.ReadLine();
-                        Console.Clear();
+                        ConsoleOutput.ConsoleOutputPointError();
                         continue;
                     }
                     string jsonWeaponList = JsonSerializer.Serialize(weaponList);
-                    File.WriteAllText(filepath, jsonWeaponList);
+                    while(selectselectPointBuyOrSale == 0)
+                    {
+                        File.WriteAllText(WEAPON_LIST, jsonWeaponList);
+                        break;
+                    }
+                    while(selectselectPointBuyOrSale == 1)
+                    {
+                        File.WriteAllText(WEAPON_LIST_USER, jsonWeaponList);
+                        break;
+                    }
                     Console.Clear();
                     Console.WriteLine("Предмет успешно удален!\n");
                     break;
@@ -42,6 +49,7 @@ namespace GunShop
                 else
                 {
                     ConsoleOutput.ConsoleOutputPointError();
+                    Menu.MainMenu();
                 }
             }
         }
