@@ -62,19 +62,18 @@ namespace GunShop
             }
             Menu.MainMenu();
         }
-        public static void BuyWeaponFileAndMenuLogic (int selectPointBuyOrSale)
+        public static void BuyWeaponFileAndMenuLogic (int selectPointBuyOrSale, DollarBalance dollarBalance)
         {
 
-            if (File.Exists(DOLLAR_BALANCE))
-            {
                 int result;
+                Weapon weapon = new Weapon();
                 Console.Clear();
                 while(selectPointBuyOrSale == 0)
                 {
                     Console.WriteLine("Какой предмет желаете приобрести?\n");
                     break;
                 }
-                while (selectPointBuyOrSale == 1)
+                while(selectPointBuyOrSale == 1)
                 {
                     Console.WriteLine("Какой предмет желаете продать?\n");
                     break;
@@ -83,18 +82,27 @@ namespace GunShop
                 string? input = Console.ReadLine();
                 if (int.TryParse(input, out result))
                 {
-                    DollarBalance dollarBalance = JsonSerializer.Deserialize<DollarBalance>(File.ReadAllText(DOLLAR_BALANCE));
-                    List<Weapon> weaponList = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(selectPointBuyOrSale == 0 ? WEAPON_LIST : WEAPON_LIST_USER));
-                    try
+                    List <Weapon> weaponList = JsonWeaponListFileCreate(true);
+                    List <Weapon> weaponListUser =JsonWeaponListFileCreate(false);
+                try
                     {
-                        Weapon weapon = weaponList[result - 1];
+                    while(selectPointBuyOrSale == 0)
+                    {
+                        weapon = weaponList[result - 1];
+                        break;
+                    }
+                    while(selectPointBuyOrSale == 1)
+                    {
+                        weapon = weaponListUser[result - 1];
+                        break;
+                    }
                         Console.Clear();
                         while(selectPointBuyOrSale == 0)
                         {
                             Console.WriteLine($"Цена покупки {weapon.Price}$\n Уверены?\n\n1.Да\n2.Нет");
                             break;
                         }
-                        while(selectPointBuyOrSale == 1)
+                        while (selectPointBuyOrSale == 1)
                         {
                             Console.WriteLine($"Цена продажи {weapon.Price}$\n Уверены?\n\n1.Да\n2.Нет");
                             break;
@@ -102,31 +110,20 @@ namespace GunShop
                         switch (Console.ReadLine())
                         {
                             case "1":
-                                if(File.Exists(WEAPON_LIST_USER))
-                                {
-                                    while(selectPointBuyOrSale == 1)
-                                    {
-                                        List<Weapon> weaponListUser = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(WEAPON_LIST_USER));
-                                        List<Weapon> weaponListBase = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(WEAPON_LIST));
-                                        BuyWeapon(weaponListBase, weaponListUser, dollarBalance, weapon, result, selectPointBuyOrSale);
-                                        break;
-                                    }
                                     while(selectPointBuyOrSale == 0)
                                     {
-                                        List<Weapon> weaponListUser = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(WEAPON_LIST_USER));
                                         BuyWeapon(weaponList, weaponListUser, dollarBalance, weapon, result, selectPointBuyOrSale);
                                         break;
                                     }
-                                }
-                                else
-                                {
-                                    List<Weapon> weaponListUser = new List<Weapon>();
-                                    BuyWeapon(weaponList, weaponListUser, dollarBalance, weapon, result, selectPointBuyOrSale);
-                                }
+                                    while(selectPointBuyOrSale == 1)
+                                    {
+                                        BuyWeapon(weaponList, weaponListUser, dollarBalance, weapon, result, selectPointBuyOrSale);
+                                        break;
+                                    }
                                 break;
                             case "2":
                                 Console.Clear();
-                                BuyWeaponFileAndMenuLogic(selectPointBuyOrSale);
+                                BuyWeaponFileAndMenuLogic(selectPointBuyOrSale,dollarBalance);
                                 break;
                             default:
                                 ConsoleOutput.ConsoleOutputPointError();
@@ -146,10 +143,38 @@ namespace GunShop
                     Menu.MainMenu();
                 }
 
+        }
+        static List<Weapon> JsonWeaponListFileCreate(bool selectPointCreateListOrListUser)
+        {
+            List<Weapon> weaponList = new List<Weapon>();
+            string weaponListPath = WEAPON_LIST;
+            if(selectPointCreateListOrListUser == false)
+            {
+                weaponListPath = WEAPON_LIST_USER;
+            }    
+            if (File.Exists(weaponListPath))
+            {
+                List<Weapon> weaponListJson = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(selectPointCreateListOrListUser ? WEAPON_LIST : WEAPON_LIST_USER));
+                weaponList = weaponListJson;
+                return weaponList;
             }
             else
             {
-                DollarBalance.SetDollarBalance();
+                List<Weapon> weaponListNewFile = new List<Weapon>();
+                Weapon weapon = new Weapon();
+                weaponListNewFile.Add(weapon);
+                string jsonWeaponListNewFile = JsonSerializer.Serialize(weaponListNewFile);
+                while (selectPointCreateListOrListUser == true)
+                {
+                    File.AppendAllText(WEAPON_LIST, jsonWeaponListNewFile);
+                    break;
+                }
+                while (selectPointCreateListOrListUser == false)
+                {
+                    File.AppendAllText(WEAPON_LIST_USER, jsonWeaponListNewFile);
+                    break;
+                }
+                return weaponList;
             }
         }
     }

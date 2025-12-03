@@ -13,17 +13,8 @@ namespace GunShop
         private const string DOLLAR_BALANCE = @"D:\dollarBalance.json";
         public static void MainMenu()
         {
-            int balanseUser = 0;
-            if(File.Exists(DOLLAR_BALANCE))
-            {
-                DollarBalance dollarBalance = JsonSerializer.Deserialize<DollarBalance>(File.ReadAllText(DOLLAR_BALANCE));
-                balanseUser = dollarBalance.DollarBalanceUser;
-            }
-            else
-            {
-                DollarBalance dollarBalance = DollarBalance.SetDollarBalance();
-                balanseUser = dollarBalance.DollarBalanceUser;
-            }
+            int balanceUser = DollarBalance.JsonBalanceFileCreate().DollarBalanceUser;
+            DollarBalance dollarBalance = DollarBalance.JsonBalanceFileCreate();
                 while (true)
                 {
                     Console.WriteLine("Добро пожаловать в оружейный магазин!\n" +
@@ -37,17 +28,17 @@ namespace GunShop
                         "6.Удалить оружие со склада (администратор)\n" +
                         "7.Посмотреть что на складе (администратор)\n" +
                         "___________________________________________\n" +
-                        $"БАЛАНС {balanseUser}$");
+                        $"БАЛАНС {balanceUser}$");
 
                     switch (Console.ReadLine())
                     {
                         case "1":
-                            Buy.BuyWeaponFileAndMenuLogic(0);
+                            Buy.BuyWeaponFileAndMenuLogic(0,dollarBalance);
                             Console.Clear();
                             break;
 
                         case "2":
-                            Buy.BuyWeaponFileAndMenuLogic(1);
+                            Buy.BuyWeaponFileAndMenuLogic(1,dollarBalance);
                             break;
 
                         case "3":
@@ -60,7 +51,7 @@ namespace GunShop
                             return;
 
                         case "5":
-                            WeaponAddList.WeaponAdd();
+                            WeaponAddList.ListExists();
                             break;
 
                         case "6":

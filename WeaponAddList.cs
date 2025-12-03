@@ -10,30 +10,39 @@ namespace GunShop
     public static class WeaponAddList
     {
         private const string WEAPON_LIST = @"D:\weaponList.json";
-        public static void WeaponAdd()
+        public static void ListExists()
         {
+            bool exists;
 
             if (File.Exists(WEAPON_LIST))
             {
+                exists = true;
                 List<Weapon> weaponList = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(WEAPON_LIST));
-                IDataProvider dataProvider = new SetConsoleData();
-                weaponList.Add(dataProvider.GetData());
-                string jsonWeaponList = JsonSerializer.Serialize(weaponList);
-                File.WriteAllText(WEAPON_LIST, jsonWeaponList);
-                ConsoleOutput.ConsoleOutputAddWeapon();
-                Menu.MainMenu();
+                AddWeapon(weaponList, exists);
             }
             else
             {
-                IDataProvider dataProvider = new SetConsoleData();
+                exists = false;
                 List<Weapon> weaponList = new List<Weapon>();
-                weaponList.Add(dataProvider.GetData());
-                string jsonWeaponList = JsonSerializer.Serialize(weaponList);
-                File.AppendAllText(WEAPON_LIST, jsonWeaponList);
-                ConsoleOutput.ConsoleOutputAddWeapon();
-                Menu.MainMenu();
+                AddWeapon(weaponList, exists);
             }
 
+        }
+        static void AddWeapon (List <Weapon> weaponList, bool exists)
+        {
+            IDataProvider dataProvider = new SetConsoleData();
+            weaponList.Add(dataProvider.GetData());
+            string jsonWeaponList = JsonSerializer.Serialize(weaponList);
+            if(exists)
+            {
+                File.WriteAllText(WEAPON_LIST, jsonWeaponList);
+            }
+            else
+            {
+                File.AppendAllText(WEAPON_LIST, jsonWeaponList);
+            }
+            ConsoleOutput.ConsoleOutputAddWeapon();
+            Menu.MainMenu();
         }
     }
 }

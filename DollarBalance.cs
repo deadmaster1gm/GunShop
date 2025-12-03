@@ -17,14 +17,25 @@ namespace GunShop
         {
             
         }
-        public static DollarBalance SetDollarBalance ()
+
+        public static DollarBalance JsonBalanceFileCreate()
         {
-            DollarBalance dollarBalanse = new DollarBalance();
-            dollarBalanse.DollarBalanceUser = 50000;
-            dollarBalanse.DollarBalanceSeller = 100000;
-            string jsonBalanceList = JsonSerializer.Serialize(dollarBalanse);
-            File.AppendAllText(DOLLAR_BALANCE, jsonBalanceList);
-            return dollarBalanse;
+            DollarBalance dollarBalance = new DollarBalance();
+            if (File.Exists(DOLLAR_BALANCE))
+            {
+                DollarBalance dollarBalanceJson = JsonSerializer.Deserialize<DollarBalance>(File.ReadAllText(DOLLAR_BALANCE));
+                dollarBalance = dollarBalanceJson;
+                return dollarBalance;
+            }
+            else
+            {
+                DollarBalance dollarBalanse = new DollarBalance();
+                dollarBalanse.DollarBalanceUser = 50000;
+                dollarBalanse.DollarBalanceSeller = 100000;
+                string jsonBalanceList = JsonSerializer.Serialize(dollarBalanse);
+                File.AppendAllText(DOLLAR_BALANCE, jsonBalanceList);
+                return dollarBalanse;
+            }
         }
     }
 }
