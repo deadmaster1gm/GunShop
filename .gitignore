@@ -1,6 +1,6 @@
-*.csproj
-*.sln
-*.slnx
-bin/
-obj/
+/*.csproj
+/*.sln
+/*.slnx
+/bin/
+/obj/
 .vs
