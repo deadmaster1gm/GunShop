@@ -10,6 +10,7 @@ services.AddTransient<ISwitchCasePointMenu, MainMenuSwitchCase>();
 services.AddTransient<IInputDataProcessor, ConsoleInputData>();
 services.AddTransient<IDataWeaponList, WeaponList>();
 services.AddTransient<IDataDollarBalance, DollarBalance>();
+services.AddTransient<IItemAction, ItemAction>();
 
 var serviceProvider = services.BuildServiceProvider();
 
@@ -25,17 +26,19 @@ class GunShop
     private readonly IInputDataProcessor _inputDataProcessor;
     private readonly IDataWeaponList _dataWeaponList;
     private readonly IDataDollarBalance _dataDollarBalance;
-    public GunShop(IMainMenu mainMenu, ISwitchCasePointMenu switchCasePointMenu, IInputDataProcessor inputDataProcessor, IDataWeaponList dataWeaponList, IDataDollarBalance dataDollarBalance)
+    private readonly IItemAction _itemAction;
+    public GunShop(IMainMenu mainMenu, ISwitchCasePointMenu switchCasePointMenu, IInputDataProcessor inputDataProcessor, IDataWeaponList dataWeaponList, IDataDollarBalance dataDollarBalance, IItemAction itemAction)
     {
         _mainMenu = mainMenu;
         _switchCasePointMenu = switchCasePointMenu;
         _inputDataProcessor = inputDataProcessor;
         _dataWeaponList = dataWeaponList;
         _dataDollarBalance = dataDollarBalance;
+        _itemAction = itemAction;
     }
     public void GetMainMenu()
     {
         _mainMenu.PointConsoleOutput(_dataDollarBalance.GetBalance());
-        _switchCasePointMenu.SwitchCase(_dataWeaponList, _inputDataProcessor);
+        _switchCasePointMenu.SwitchCase(_dataWeaponList, _inputDataProcessor, _itemAction);
     }
 }
