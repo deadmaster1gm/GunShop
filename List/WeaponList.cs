@@ -42,6 +42,7 @@ namespace NewGunShop.Interface
             File.WriteAllText(path, jsonWeaponList);
             Console.WriteLine("Оружие добавлено на склад!");
             Console.ReadLine();
+            Console.Clear();
         }
         private void ReturnWeaponsToConsole(string path)
         {
@@ -58,9 +59,11 @@ namespace NewGunShop.Interface
                 }
                 else
                 {
-                    Console.WriteLine($"{i}. {item.Model} с боезапасом {item.Ammo} магазинов (цена {item.Price}$)");
+                    Console.WriteLine($"{i}. {item.Model} с боезапасом {item.Ammo} патронов (цена {item.Price}$)");
                 }
             }
+            Console.ReadLine();
+            Console.Clear();
         }
         IEnumerable<Weapon> ReturnGunOneByOne(List<Weapon> weaponList)
         {
