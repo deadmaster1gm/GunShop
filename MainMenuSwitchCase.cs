@@ -10,7 +10,7 @@ namespace NewGunShop
     {
         private readonly string pathWeaponList = @"weaponList.json";
         private readonly string pathWeaponListUser = @"weaponListUser.json";
-        public void SwitchCase(IDataWeaponList dataWeaponList, IInputDataProcessor inputDataProcessor)
+        public void SwitchCase(IDataWeaponList dataWeaponList, IInputDataProcessor inputDataProcessor, IItemAction itemAction)
         {
             switch (Console.ReadLine())
             {
@@ -18,6 +18,7 @@ namespace NewGunShop
                     Console.Clear();
                     Console.WriteLine("Какое оружие желаете приобрести?\n");
                     dataWeaponList.GetWeaponList(pathWeaponList);
+                    itemAction.Buy();
                     break;
                 case "2":
                     Console.Clear();
