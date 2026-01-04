@@ -7,19 +7,19 @@ using NewGunShop.Interface;
 
 namespace NewGunShop.Interface
 {
-    internal class WeaponList : IDataWeaponList
+    class WeaponList : IDataWeaponList
     {
 
-        public void GetWeaponList(string path)
+        public List <Weapon> GetWeaponList(string path)
         {
             if (File.Exists(path))
             {
-                ReturnWeaponsToConsole(path);
+                return ReturnWeaponsToConsole(path);
             }
             else
             {
                 File.WriteAllText(path, "[]");
-                ReturnWeaponsToConsole(path);
+                return ReturnWeaponsToConsole(path);
             }
         }
         public void AppendToWeaponList(string path, Weapon weapon)
@@ -44,7 +44,7 @@ namespace NewGunShop.Interface
             Console.ReadLine();
             Console.Clear();
         }
-        private void ReturnWeaponsToConsole(string path)
+        private List <Weapon> ReturnWeaponsToConsole(string path)
         {
             List<Weapon> weaponList = JsonSerializer.Deserialize<List<Weapon>>(File.ReadAllText(path));
 
@@ -62,8 +62,7 @@ namespace NewGunShop.Interface
                     Console.WriteLine($"{i}. {item.Model} с боезапасом {item.Ammo} патронов (цена {item.Price}$)");
                 }
             }
-            Console.ReadLine();
-            Console.Clear();
+            return weaponList;
         }
         IEnumerable<Weapon> ReturnGunOneByOne(List<Weapon> weaponList)
         {

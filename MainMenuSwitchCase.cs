@@ -17,8 +17,7 @@ namespace NewGunShop
                 case "1":
                     Console.Clear();
                     Console.WriteLine("Какое оружие желаете приобрести?\n");
-                    dataWeaponList.GetWeaponList(pathWeaponList);
-                    itemAction.Buy();
+                    itemAction.Buy(dataWeaponList.GetWeaponList(pathWeaponList));
                     break;
                 case "2":
                     Console.Clear();

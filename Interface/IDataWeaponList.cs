@@ -2,7 +2,7 @@
 {
     internal interface IDataWeaponList
     {
-        void GetWeaponList(string path);
+        List <Weapon> GetWeaponList(string path);
         void AppendToWeaponList(string path, Weapon weapon);
 
     }
