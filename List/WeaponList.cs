@@ -70,6 +70,8 @@ namespace NewGunShop.Interface
             {
                 Console.Clear();
                 Console.WriteLine("Пусто!");
+                Console.ReadLine();
+                Console.Clear();
             }
             else
             {
