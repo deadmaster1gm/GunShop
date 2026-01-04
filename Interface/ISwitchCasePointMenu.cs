@@ -6,6 +6,6 @@ namespace NewGunShop.Interface
 {
     internal interface ISwitchCasePointMenu
     {
-        void SwitchCase(IDataWeaponList dataWeaponList, IInputDataProcessor inputDataProcessor);
+        void SwitchCase(IDataWeaponList dataWeaponList, IInputDataProcessor inputDataProcessor, IItemAction itemAction);
     }
 }
