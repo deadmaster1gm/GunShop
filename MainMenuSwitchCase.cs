@@ -16,17 +16,17 @@ namespace NewGunShop
             {
                 case "1":
                     Console.Clear();
-                    Console.WriteLine("Какое оружие желаете приобрести?");
+                    Console.WriteLine("Какое оружие желаете приобрести?\n");
                     dataWeaponList.GetWeaponList(pathWeaponList);
                     break;
                 case "2":
                     Console.Clear();
-                    Console.WriteLine("Какое оружие желаете продать?");
+                    Console.WriteLine("Какое оружие желаете продать?\n");
                     dataWeaponList.GetWeaponList(pathWeaponListUser);
                     break;
                 case "3":
                     Console.Clear();
-                    Console.WriteLine("Инвентарь:");
+                    Console.WriteLine("Инвентарь:\n");
                     dataWeaponList.GetWeaponList(pathWeaponListUser);
                     break;
                 case "4":
@@ -35,8 +35,14 @@ namespace NewGunShop
                     dataWeaponList.AppendToWeaponList(pathWeaponList, inputDataProcessor.SetData(pathWeaponList));
                     break;
                 case "6":
+                    Console.Clear();
+                    Console.WriteLine("Какое оружие удалить со склада?\n");
+                    dataWeaponList.GetWeaponList(pathWeaponList);
                     break;
                 case "7":
+                    Console.Clear();
+                    Console.WriteLine("Склад магазина:\n");
+                    dataWeaponList.GetWeaponList(pathWeaponList);
                     break;
             }
         }
