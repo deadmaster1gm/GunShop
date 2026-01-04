@@ -6,7 +6,7 @@ namespace NewGunShop.Interface
 {
     interface IItemAction
     {
-        void Buy(List <Weapon> weaponList);
+        void Buy(List <Weapon> weaponList, string pathSeller, string pathBuyer, string pathDollarBalance);
         void Sale();
     }
 }

@@ -10,6 +10,7 @@ namespace NewGunShop
     {
         private readonly string pathWeaponList = @"weaponList.json";
         private readonly string pathWeaponListUser = @"weaponListUser.json";
+        private readonly string pathDollarBalance = @"dollarBalance.json";
         public void SwitchCase(IDataWeaponList dataWeaponList, IInputDataProcessor inputDataProcessor, IItemAction itemAction)
         {
             switch (Console.ReadLine())
@@ -17,7 +18,7 @@ namespace NewGunShop
                 case "1":
                     Console.Clear();
                     Console.WriteLine("Какое оружие желаете приобрести?\n");
-                    itemAction.Buy(dataWeaponList.GetWeaponList(pathWeaponList));
+                    itemAction.Buy(dataWeaponList.GetWeaponList(pathWeaponList), pathWeaponList, pathWeaponListUser, pathDollarBalance);
                     break;
                 case "2":
                     Console.Clear();
@@ -28,6 +29,8 @@ namespace NewGunShop
                     Console.Clear();
                     Console.WriteLine("Инвентарь:\n");
                     dataWeaponList.GetWeaponList(pathWeaponListUser);
+                    Console.ReadLine();
+                    Console.Clear();
                     break;
                 case "4":
                     return;
