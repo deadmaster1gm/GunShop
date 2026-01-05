@@ -10,7 +10,7 @@ namespace NewGunShop
 {
     class ItemAction : IItemAction
     {
-        public void Buy(List<Weapon> weaponList, string pathSeller, string pathBuyer, string pathDollarBalance, bool methodBuyOrSale)
+        public void BuyOrSale(List<Weapon> weaponList, string pathSeller, string pathBuyer, string pathDollarBalance, bool methodBuyOrSale)
         {
             while (true)
             {
@@ -71,9 +71,28 @@ namespace NewGunShop
             }
         }
 
-        public void Sale()
+        public void Delete(List<Weapon> weaponList, string pathSeller)
         {
-            throw new NotImplementedException();
+            while (true)
+            {
+                int result;
+                string? input = Console.ReadLine();
+
+                if (int.TryParse(input, out result))
+                {
+                    weaponList.RemoveAt(result - 1);
+                    string jsonWeaponList = JsonSerializer.Serialize(weaponList);
+                    File.WriteAllText(pathSeller, jsonWeaponList);
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Некорректный ввод!");
+                    break;
+                }
+                Console.Clear();
+                Console.WriteLine("Успешно!");
+            }
         }
     }
 }
