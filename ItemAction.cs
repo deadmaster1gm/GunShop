@@ -10,7 +10,7 @@ namespace NewGunShop
 {
     class ItemAction : IItemAction
     {
-        public void Buy(List<Weapon> weaponList, string pathSeller, string pathBuyer, string pathDollarBalance)
+        public void Buy(List<Weapon> weaponList, string pathSeller, string pathBuyer, string pathDollarBalance, bool methodBuyOrSale)
         {
             while (true)
             {
@@ -39,24 +39,35 @@ namespace NewGunShop
                         int balanceSeller = dollarBalance._sellerDollarBalance;
                         int balanceBuyer = dollarBalance._userDollarBalance;
                         int priceWeapon = int.Parse(weapon.Price);
-                        int resultBalanceSeller = balanceSeller + priceWeapon;
-                        int resultBalanceBuyer = balanceBuyer - priceWeapon;
-                        dollarBalance._sellerDollarBalance = resultBalanceSeller;
-                        dollarBalance._userDollarBalance = resultBalanceBuyer;
-                        string jsonDollarBalance = JsonSerializer.Serialize(dollarBalance);
-                        File.WriteAllText(pathDollarBalance, jsonDollarBalance);
-                        break;
+                        if (methodBuyOrSale == true)
+                        {
+                            int resultBalanceSeller = balanceSeller + priceWeapon;
+                            int resultBalanceBuyer = balanceBuyer - priceWeapon;
+                            dollarBalance._sellerDollarBalance = resultBalanceSeller;
+                            dollarBalance._userDollarBalance = resultBalanceBuyer;
+                            string jsonDollarBalance = JsonSerializer.Serialize(dollarBalance);
+                            File.WriteAllText(pathDollarBalance, jsonDollarBalance);
+                        }
+                        else if (methodBuyOrSale == false)
+                        {
+                            int resultBalanceSeller = balanceSeller - priceWeapon;
+                            int resultBalanceBuyer = balanceBuyer + priceWeapon;
+                            dollarBalance._sellerDollarBalance = resultBalanceSeller;
+                            dollarBalance._userDollarBalance = resultBalanceBuyer;
+                            string jsonDollarBalance = JsonSerializer.Serialize(dollarBalance);
+                            File.WriteAllText(pathDollarBalance, jsonDollarBalance);
+                        }
                     }
                     else
                     {
                         Console.Clear();
                         Console.WriteLine("Некорректный ввод!");
+                        break;
                     }
-                }
                 Console.Clear();
                 Console.WriteLine("Успешно!");
-                Console.ReadLine();
-                Console.Clear();
+                break;
+                }
             }
         }
 

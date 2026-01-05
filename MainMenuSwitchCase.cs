@@ -18,19 +18,20 @@ namespace NewGunShop
                 case "1":
                     Console.Clear();
                     Console.WriteLine("Какое оружие желаете приобрести?\n");
-                    itemAction.Buy(dataWeaponList.GetWeaponList(pathWeaponList), pathWeaponList, pathWeaponListUser, pathDollarBalance);
+                    itemAction.Buy(dataWeaponList.GetWeaponList(pathWeaponList), pathWeaponList, pathWeaponListUser, pathDollarBalance, true);
+                    Console.ReadLine();
                     break;
                 case "2":
                     Console.Clear();
                     Console.WriteLine("Какое оружие желаете продать?\n");
-                    dataWeaponList.GetWeaponList(pathWeaponListUser);
+                    itemAction.Buy(dataWeaponList.GetWeaponList(pathWeaponListUser), pathWeaponListUser, pathWeaponList, pathDollarBalance, false);
+                    Console.ReadLine();
                     break;
                 case "3":
                     Console.Clear();
                     Console.WriteLine("Инвентарь:\n");
                     dataWeaponList.GetWeaponList(pathWeaponListUser);
                     Console.ReadLine();
-                    Console.Clear();
                     break;
                 case "4":
                     return;
@@ -46,6 +47,8 @@ namespace NewGunShop
                     Console.Clear();
                     Console.WriteLine("Склад магазина:\n");
                     dataWeaponList.GetWeaponList(pathWeaponList);
+                    Console.ReadLine();
+                    Console.Clear();
                     break;
             }
         }

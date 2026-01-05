@@ -17,6 +17,7 @@ var serviceProvider = services.BuildServiceProvider();
 var gunShopService = serviceProvider.GetRequiredService<GunShop>();
 while (true)
 {
+    Console.Clear();
     gunShopService.GetMainMenu();
 }
 class GunShop
