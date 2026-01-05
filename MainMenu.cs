@@ -21,7 +21,8 @@ namespace NewGunShop
                         "6.Удалить оружие со склада (администратор)\n" +
                         "7.Посмотреть что на складе (администратор)\n" +
                         "___________________________________________\n" +
-                        $"БАЛАНС ${dollarBalance._userDollarBalance}");
+                        $"БАЛАНС ПОЛЬЗОВАТЕЛЯ ${dollarBalance._userDollarBalance}\n" +
+                        $"БАЛАНС МАГАЗИНА ${dollarBalance._sellerDollarBalance}");
         }
     }
 }
